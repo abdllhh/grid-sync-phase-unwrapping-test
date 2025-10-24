@@ -22,9 +22,17 @@ theta = atan2(sin(theta), cos(theta));  % Keep in [-π, π]
 if delta_w_raw > π:  delta_w = delta_w_raw - 2π
 if delta_w_raw < -π: delta_w = delta_w_raw + 2π
 ```
-### examples ###
+
+
+***Some Graphs***
+
+Normal Operation:
 ![graphs](phaseunwrapping/Screenshot%202025-10-25%20012909.png)
+
+30 deg phase jump added:
 ![graphs](phaseunwrapping/Screenshot%202025-10-25%20013040.png)
+
+comparison:
 ![graphs](phaseunwrapping/Screenshot%202025-10-25%20013107.png)
 
 
