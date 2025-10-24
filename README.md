@@ -14,13 +14,6 @@ Grid-tied inverters (solar, battery storage, wind) must synchronize their output
   3. Frequency jump response (50 Hz → 51 Hz)
   4. Direct comparison: WITH vs WITHOUT unwrapping
 
-**Control Algorithm:** 
-```
-phase_error = sin(θ_grid - θ_inverter)
-delta_w_sync = Kp * error + Kd * (error - error_prev)
-θ_inverter += delta_w + delta_w_sync
-```
-
 **Phase Unwrapping Method:**
 ```matlab
 theta = atan2(sin(theta), cos(theta));  % Keep in [-π, π]
@@ -29,5 +22,9 @@ theta = atan2(sin(theta), cos(theta));  % Keep in [-π, π]
 if delta_w_raw > π:  delta_w = delta_w_raw - 2π
 if delta_w_raw < -π: delta_w = delta_w_raw + 2π
 ```
+### examples ###
+![graphs](phaseunwrapping/Screenshot 2025-10-25 012909.png)
+![graphs](phaseunwrapping/Screenshot 2025-10-25 013040.png)
+![graphs](phaseunwrapping/Screenshot 2025-10-25 013107.png)
 
 
