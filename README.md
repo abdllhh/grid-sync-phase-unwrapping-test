@@ -1,2 +1,33 @@
-# grid-sync-phase-unwrapping-test
-MATLAB simulation testbench for PLL grid synchronization with proper phase unwrapping
+
+
+**Problem:**
+Grid-tied inverters (solar, battery storage, wind) must synchronize their output voltage phase with the utility grid before connecting. Discrete-time phase tracking introduces **angle wrapping issues** at ±π boundaries, causing:
+- Sudden jumps in computed angular velocity (delta_w)
+- False frequency estimates (50 Hz appearing as 500+ Hz)
+- Controller instability and failed synchronization
+
+**Solution:** Proper phase unwrapping using `atan2(sin(θ), cos(θ))` and discontinuity compensation.
+
+**Test Scenarios:**
+  1. Normal operation baseline (stable 50 Hz tracking)
+  2. 30° phase jump disturbance rejection
+  3. Frequency jump response (50 Hz → 51 Hz)
+  4. Direct comparison: WITH vs WITHOUT unwrapping
+
+**Control Algorithm:** 
+```
+phase_error = sin(θ_grid - θ_inverter)
+delta_w_sync = Kp * error + Kd * (error - error_prev)
+θ_inverter += delta_w + delta_w_sync
+```
+
+**Phase Unwrapping Method:**
+```matlab
+theta = atan2(sin(theta), cos(theta));  % Keep in [-π, π]
+
+% Handle delta_w discontinuities
+if delta_w_raw > π:  delta_w = delta_w_raw - 2π
+if delta_w_raw < -π: delta_w = delta_w_raw + 2π
+```
+
+
